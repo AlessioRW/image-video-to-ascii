@@ -1,5 +1,6 @@
 from PIL import Image, ImageOps
 import easygui, os, sys
+print('Pass "e" as parameter to use extended character set if using command line')
 
 def show(text):
     for line in text:
@@ -34,14 +35,14 @@ for yBlock in range(height // pixelNum):
     charBlocks.append(blockLine)
 
 try:
-    if 'c' in ''.join(sys.argv[1:]).lower():
+    if 'e' in ''.join(sys.argv[1:]).lower():
         asciiCharacters = [' ', '.', "'", '`', '^', '"', ',', ':', ';', 'I', 'l', '!', 'i', '>', '<', '~', '+', '_', '-', '?', ']', '[', '}', '{', '1', ')', '(', 
         '|', '\\', '/', 't', 'f', 'j', 'r', 'x', 'n', 'u', 'v', 'c', 'z', 'X', 'Y', 'U', 'J', 'C', 'L', 'Q', '0', 'O', 'Z', 'm', 'w', 'q', 'p', 'd', 'b', 'k', 
         'h', 'a', 'o', '*', '#', 'M', 'W', '&', '8', '%', 'B', '@', '$']
     else:
         asciiCharacters = [" ",".",":","-","=","+","*","#","%","@"]
 except:
-    if 'y' in input('Use complex character set (y for yes)').lower():
+    if 'y' in input('Use extended character set (y for yes)').lower():
         asciiCharacters = [' ', '.', "'", '`', '^', '"', ',', ':', ';', 'I', 'l', '!', 'i', '>', '<', '~', '+', '_', '-', '?', ']', '[', '}', '{', '1', ')', '(', 
         '|', '\\', '/', 't', 'f', 'j', 'r', 'x', 'n', 'u', 'v', 'c', 'z', 'X', 'Y', 'U', 'J', 'C', 'L', 'Q', '0', 'O', 'Z', 'm', 'w', 'q', 'p', 'd', 'b', 'k', 
         'h', 'a', 'o', '*', '#', 'M', 'W', '&', '8', '%', 'B', '@', '$']
