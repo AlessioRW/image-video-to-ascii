@@ -1,3 +1,6 @@
-# img-to-ascii
-Select image and convert it to ASCII chaarcters, uses simple or expanded character set.
-If running using command line, pass c as parameter to use complex expanded character set.
+# image-video-to-ascii
+Select image and convert it to ASCII chaarcters, uses simple or extended character set.
+If running using command line, pass e as parameter to use complex extended character set.
+
+Converted images can be saved to desktop, though this only works for windows. So if the directory
+cannot be found or you are running on non-windows, it will save to current working directory.
