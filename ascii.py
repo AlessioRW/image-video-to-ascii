@@ -1,4 +1,3 @@
-from cmath import e
 from PIL import Image, ImageOps
 import easygui, os, sys, cv2, time
 print('Pass "ext" as parameter to use extended character set if using command line')
