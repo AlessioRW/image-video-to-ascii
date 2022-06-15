@@ -1,9 +1,11 @@
 from cmath import e
 from PIL import Image, ImageOps
 import easygui, os, sys, cv2, time
-print('Pass "e" as parameter to use extended character set if using command line')
+print('Pass "ext" as parameter to use extended character set if using command line')
+print('Pass "cam" to use camera as live input video\n')
 
 def show(text):
+    os.system('cls')
     for line in text:
         print(line)
 
@@ -73,26 +75,50 @@ def videoToAscii(filename):
     input('Play ASCII Video (Press Enter): ')
     timePerFrame = 1/video.get(cv2.CAP_PROP_FPS)
     for frame in frames:
-        os.system('cls')
         show(frame)
-        time.sleep(timePerFrame*0.8)
+        time.sleep(timePerFrame*0.2)
 
+def camera():
+    try:
+        video = cv2.VideoCapture(0)
+    except:
+        print('Error getting camera input')
+  
+    while(True):
+        ret, frame = video.read() #get current camera frame
+        text = imageToAscii(ImageOps.grayscale(Image.fromarray(frame)),True) #get frame in ASCII
+        show(text) #print frame
 
-if 'e' in ''.join(sys.argv[1:]).lower():
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
+    video.release()
+    cv2.destroyAllWindows()
+
+parameters = ''.join(sys.argv[1:]).lower()
+if 'ext' in parameters:
     asciiCharacters = [' ', '.', "'", '`', '^', '"', ',', ':', ';', 'I', 'l', '!', 'i', '>', '<', '~', '+', '_', '-', '?', ']', '[', '}', '{', '1', ')', '(', 
         '|', '\\', '/', 't', 'f', 'j', 'r', 'x', 'n', 'u', 'v', 'c', 'z', 'X', 'Y', 'U', 'J', 'C', 'L', 'Q', '0', 'O', 'Z', 'm', 'w', 'q', 'p', 'd', 'b', 'k', 
         'h', 'a', 'o', '*', '#', 'M', 'W', '&', '8', '%', 'B', '@', '$']
+    print('Using extended chaarcter set')
+
 else:
     asciiCharacters = [" ",".",":","-","=","+","*","#","%","@"]
+    print('Using standard chaarcter set')
 
 
-
-filename = easygui.fileopenbox()
 pixelNum = int(input('N.Pixels squared per character (1 = one character per pixel): ')) #number of pixels per character squared ; 10 = 10x10
 
-vidFiles = ['mp4','webm','gif','mkv']
-imgFiles = ['png','jpg','jpeg']
-if filename.split('.')[1] in vidFiles:
-    videoToAscii(filename)
-elif filename.split('.')[1] in imgFiles:
-    imageToAscii(ImageOps.grayscale(Image.open(filename)),False)
+if 'cam' in parameters:
+    input('Using camera as live input (press enter to start):')
+    camera()
+
+else:
+    filename = easygui.fileopenbox()
+
+    vidFiles = ['mp4','webm','gif','mkv']
+    imgFiles = ['png','jpg','jpeg']
+    if filename.split('.')[1] in vidFiles:
+        videoToAscii(filename)
+    elif filename.split('.')[1] in imgFiles:
+        imageToAscii(ImageOps.grayscale(Image.open(filename)),False)
